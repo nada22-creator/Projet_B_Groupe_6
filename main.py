@@ -9,6 +9,7 @@
 # ----------------------------------------------------------------------------
 # ÉTAPE 1 : Importation des bibliothèques standards, scientifiques et modules
 # ----------------------------------------------------------------------------
+
 # Importation de notre module personnalisé d'analyse numérique
 from integration_numerique import calcul_solution_analytique, calcul_erreur_relative
 
@@ -16,6 +17,7 @@ from integration_numerique import calcul_solution_analytique, calcul_erreur_rela
 # ----------------------------------------------------------------------------
 # ÉTAPE 2 : Définition des conditions initiales et paramètres du problème
 # ----------------------------------------------------------------------------
+
 # Coefficients fixés pour le polynôme du 3e degré : f(x) = p1 + p2*x + p3*x^2 + p4*x^3
 p1, p2, p3, p4 = 1.0, 2.0, 3.0, 4.0
 
