@@ -16,11 +16,18 @@
 # ----------------------------------------------------------------------------
 import numpy as np
 import timeit
-# Importation des fonctions analytiques regroupées dans notre module unique
+# Importation des fonctions regroupées dans notre module d'intégration
+
 from integration_numerique import (
     calcul_solution_analytique,
     calcul_solution_analytique_numpy,
-    calcul_erreur_relative
+    calcul_erreur_relative,
+
+)
+# 2. Importation depuis le Module Spécifique de la Méthode des Rectangles
+from methode_rectangles import (
+    integration_rectangles_base,
+    integration_rectangles_numpy
 )
 
 # ----------------------------------------------------------------------------
@@ -46,17 +53,13 @@ def mesurer_performance(fonction_integration, *args, clics_execution=100):
     """
     Calcule le temps d'exécution moyen d'une fonction d'intégration numérique.
 
-    CONSIGNE DU PROJET : Répond à l'exigence d'évaluation du temps de calcul via timeit.
-    CONCEPTION BINÔME : Cette fonction est développée de manière générique et modulaire.
-                        Elle accepte n'importe quelle méthode (Rectangles, Trapèzes,
-                        Simpson) en argument afin de centraliser et d'uniformiser
-                        les mesures de performance de toute l'équipe.
+
 
     Démarche :
         1. Utilisation d'une fonction anonyme 'lambda' pour encapsuler la fonction
            cible avec ses arguments sans l'exécuter immédiatement.
         2. Appel de timeit.timeit() pour répéter l'exécution un grand nombre de fois
-           afin d'éliminer les fluctuations système (bruits de fond de l'ordinateur).
+           afin d'éliminer les fluctuations système.
         3. Calcul du temps moyen d'une seule exécution.
 
     Paramètres:
@@ -118,4 +121,25 @@ difference_analytique = calcul_erreur_relative(i_exact_base, i_exact_numpy)
 print(f"Écart entre les deux fonctions   : {difference_analytique:.6e}")
 print("-" * 60)
 
+# ----------------------------------------------------------------------------
+# ÉTAPE 4 : Intégration Numérique - Méthode des Rectangles (Point Milieu)
+# ----------------------------------------------------------------------------
 
+# Chronométrage de la version itérative (Boucle standard)
+temps_rect_base = mesurer_performance(
+    integration_rectangles_base, borne_a, borne_b, p1, p2, p3, p4, n_segments_base
+)
+
+# Chronométrage de la version vectorisée (Grille linéaire NumPy)
+temps_rect_numpy = mesurer_performance(
+    integration_rectangles_numpy, borne_a, borne_b, coefficients_poly, n_segments_base
+)
+
+print(f"Temps de calcul (Python de base) : {temps_rect_base:.3e} secondes")
+print(f"Temps de calcul (Version NumPy)   : {temps_rect_numpy:.3e} secondes")
+print("-" * 60)
+
+# Calcul créatif du gain d'efficacité grâce à la vectorisation
+rapport_vitesse_rect = temps_rect_base / temps_rect_numpy
+print(f"Résultat de l'analyse : NumPy est {rapport_vitesse_rect:.1f}x plus rapide sur les rectangles !")
+print("=" * 60)
