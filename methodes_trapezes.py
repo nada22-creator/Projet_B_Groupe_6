@@ -7,7 +7,7 @@ def calcul_trapeze(a, b, n, p1, p2, p3, p4):
     Approximation de l'intégrale d'un polynôme du 3e degré
     par la méthode des trapèzes.
 
-    Paramètres :
+    Paramètres:
         a, b (float) : Bornes d'intégration.
         n (int) : Nombre de sous-intervalles.
         p1, p2, p3, p4 (float) : Coefficients du polynôme.
