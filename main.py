@@ -120,7 +120,6 @@ print(f"Solution exacte (Via NumPy)       : {i_exact_numpy:.6f}")
 difference_analytique = calcul_erreur_relative(i_exact_base, i_exact_numpy)
 print(f"Écart entre les deux fonctions   : {difference_analytique:.6e}")
 print("-" * 60)
-
 # ----------------------------------------------------------------------------
 # ÉTAPE 4 : Intégration Numérique - Méthode des Rectangles (Point Milieu)
 # ----------------------------------------------------------------------------
