@@ -5,11 +5,9 @@
 #               solutions analytiques (de base et NumPy) du module d'intégration,
 #               évalue les écarts et servira de base pour les calculs numériques.
 # ============================================================================
-               # ----------------------------------------------------------------------------
-                   # I-Configuration premiere Methode de reference : Integration numerique
-               # ----------------------------------------------------------------------------
-
-
+# ----------------------------------------------------------------------------
+# I-Configuration premiere Methode de reference : Integration numerique
+# ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
 # ÉTAPE 1 : Importations des bibliothèques et du module d'analyse numérique
@@ -30,6 +28,15 @@ from methode_rectangles import (
     integration_rectangles_numpy
 )
 
+# 3. Importation depuis le Module Spécifique aux graphiques
+
+from Graphiques import (
+    tracer_convergence,
+    tracer_temps_execution,
+    tracer_erreurs,
+    tracer_surface_polynome
+)
+
 # ----------------------------------------------------------------------------
 # ÉTAPE 2 : Définition des paramètres de l'exercice
 # ----------------------------------------------------------------------------
@@ -44,7 +51,6 @@ borne_b = 3.0
 # Nombre de segments initial pour la validation des méthodes numériques
 n_segments_base = 10
 
-
 # ============================================================================
 # OUTILS DE MESURE DES PERFORMANCES (Module timeit)
 # ============================================================================
@@ -53,23 +59,7 @@ def mesurer_performance(fonction_integration, *args, clics_execution=100):
     """
     Calcule le temps d'exécution moyen d'une fonction d'intégration numérique.
 
-
-
-    Démarche :
-        1. Utilisation d'une fonction anonyme 'lambda' pour encapsuler la fonction
-           cible avec ses arguments sans l'exécuter immédiatement.
-        2. Appel de timeit.timeit() pour répéter l'exécution un grand nombre de fois
-           afin d'éliminer les fluctuations système.
-        3. Calcul du temps moyen d'une seule exécution.
-
-    Paramètres:
-        fonction_integration (callable) : La fonction mathématique à chronométrer.
-        *args : Liste d'arguments variables requis par la fonction cible (bornes, p, n).
-        clics_execution (int) : Nombre de répétitions pour la moyenne (par défaut 100).
-
-    Retourne:
-        float : Le temps d'exécution moyen d'un calcul (en secondes).
-    """
+   """
     # 1. Répétition de la fonction via une structure lambda pour mesurer le temps cumulé
     temps_cumule = timeit.timeit(lambda: fonction_integration(*args), number=clics_execution)
 
@@ -142,3 +132,69 @@ print("-" * 60)
 rapport_vitesse_rect = temps_rect_base / temps_rect_numpy
 print(f"Résultat de l'analyse : NumPy est {rapport_vitesse_rect:.1f}x plus rapide sur les rectangles !")
 print("=" * 60)
+# ============================================================================
+# ÉTAPE 5 : AFFICHAGE DES GRAPHIQUES
+# ============================================================================
+
+n_values = [10, 20, 50, 100, 200, 500, 1000]
+
+erreurs_rect = []
+temps_python = []
+temps_numpy = []
+
+for n in n_values:
+
+    approx = integration_rectangles_numpy(
+        borne_a,
+        borne_b,
+        coefficients_poly,
+        n
+    )
+
+    erreurs_rect.append(abs(i_exact_numpy - approx))
+
+    temps_python.append(
+        mesurer_performance(
+            integration_rectangles_base,
+            borne_a,
+            borne_b,
+            p1, p2, p3, p4,
+            n
+        )
+    )
+
+    temps_numpy.append(
+        mesurer_performance(
+            integration_rectangles_numpy,
+            borne_a,
+            borne_b,
+            coefficients_poly,
+            n
+        )
+    )
+
+# ------------------------------------------------------------------
+# AFFICHAGE DES GRAPHIQUES
+# ------------------------------------------------------------------
+
+tracer_convergence(n_values, erreurs_rect)
+
+tracer_temps_execution(
+    n_values,
+    temps_python,
+    temps_numpy
+)
+
+tracer_erreurs(
+    n_values,
+    erreurs_rect
+)
+
+tracer_surface_polynome(
+    borne_a,
+    borne_b,
+    p1,
+    p2,
+    p3,
+    p4
+)
