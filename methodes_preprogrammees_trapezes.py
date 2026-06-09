@@ -1,6 +1,7 @@
 # ============================================================================
 # SECTION 5 : METHODE PREPROGRAMMEE NUMPY
 # ============================================================================
+import numpy as np
 
 def calcul_trapeze_preprogramme(a, b, n, coefficients):
     """
