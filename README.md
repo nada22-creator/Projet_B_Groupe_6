@@ -102,7 +102,17 @@ Le programme :
 
 ## 5. Structure du projet
 
-text Projet_B_Groupe_6/ │ ├── main.py ├── integration_numerique.py ├── methode_rectangles.py ├── methodes_trapezes.py ├── methodes_preprogrammees_trapezes.py ├── methode_simpson.py ├── methode_simpson_preprog.py ├── Graphiques.py ├── README.md 
+text Projet_B_Groupe_6/ 
+├── main.py
+├── integration_numerique.py
+├── methode_rectangles.py
+├── methodes_trapezes.py
+├── methodes_preprogrammees_trapezes.py
+├── methodes_simpson.py
+├── methode_simpson_preprog.py
+├── Graphiques.py
+├── README.md
+```
 
 ---
 
