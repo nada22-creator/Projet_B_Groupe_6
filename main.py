@@ -143,6 +143,13 @@ if __name__ == "__main__":
     print(f"Temps de calcul (Python de base) : {temps_rect_base:.7f} s")
     print(f"Temps de calcul (Version NumPy)   : {temps_rect_numpy:.7f} s")
     print(f"Gain d'efficacité Numérique      : NumPy est {rapport_vitesse_rect:.1f}x plus rapide")
+    valeur_rect_10 = integration_rectangles_numpy(borne_a, borne_b, coefficients_poly, 10)
+    erreur_rect_10 = abs(i_exact_numpy - valeur_rect_10)
+    print(f"Valeur obtenue Rectangles (n=10) : {valeur_rect_10:.6f}")
+    print(f"Erreur Rectangles (n=10)         : {erreur_rect_10:.6f}")
+
+    print("=" * 70)
+    print("\n")
     print("=" * 70)
     print("\n")
 
