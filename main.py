@@ -28,6 +28,11 @@ from methode_rectangles import (
     integration_rectangles_numpy
 )
 
+from methode_simpson import (
+    integration_simpson_base,
+    integration_simpson_numpy
+)
+
 # 3. Importation depuis le Module Spécifique aux graphiques
 
 from Graphiques import (
@@ -142,6 +147,10 @@ erreurs_rect = []
 temps_python = []
 temps_numpy = []
 
+erreurs_simp = []
+temps_simpson_python = []
+temps_simpson_numpy = []
+
 for n in n_values:
 
     approx = integration_rectangles_numpy(
@@ -173,21 +182,53 @@ for n in n_values:
         )
     )
 
+    approx_simpson = integration_simpson_numpy(
+        borne_a,
+        borne_b,
+        coefficients_poly,
+        n
+    )
+
+    erreurs_simp.append(abs(i_exact_numpy - approx_simpson))
+
+    temps_simpson_python.append(
+        mesurer_performance(
+            integration_simpson_base,
+            borne_a,
+            borne_b,
+            p1, p2, p3, p4,
+            n
+        )
+    )
+
+    temps_simpson_numpy.append(
+        mesurer_performance(
+            integration_simpson_numpy,
+            borne_a,
+            borne_b,
+            coefficients_poly,
+            n
+        )
+    )
+
 # ------------------------------------------------------------------
 # AFFICHAGE DES GRAPHIQUES
 # ------------------------------------------------------------------
 
-tracer_convergence(n_values, erreurs_rect)
+tracer_convergence(n_values, erreurs_rect, erreurs_simp)
 
 tracer_temps_execution(
     n_values,
     temps_python,
-    temps_numpy
+    temps_numpy,
+    temps_simpson_python,
+    temps_simpson_numpy
 )
 
 tracer_erreurs(
     n_values,
-    erreurs_rect
+    erreurs_rect,
+    erreurs_simp
 )
 
 tracer_surface_polynome(
