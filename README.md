@@ -1,6 +1,6 @@
 # MGA802 — Mini-Projet B — Équipe 6
 
-# Intégration numérique et comparaison des méthodes
+## Intégration numérique et comparaison des méthodes
 
 ## 1. Description du programme
 
@@ -27,7 +27,9 @@ Calcule la valeur exacte de l'intégrale du polynôme.
 
 Exemple :
 
-python calcul_solution_analytique(a, b, p1, p2, p3, p4) 
+```python
+calcul_solution_analytique(a, b, p1, p2, p3, p4)
+```
 
 ### Méthode des rectangles
 
@@ -76,11 +78,17 @@ Installer Python 3.12 ou une version plus récente.
 
 Installer les bibliothèques nécessaires :
 
-bash pip install numpy pip install matplotlib pip install scipy 
+```bash
+pip install numpy
+pip install matplotlib
+pip install scipy
+```
 
 ### Vérification
 
-bash python --version 
+```bash
+python --version
+```
 
 ---
 
@@ -88,7 +96,9 @@ bash python --version
 
 Ouvrir un terminal dans le dossier du projet puis exécuter :
 
-bash python main.py 
+```bash
+python main.py
+```
 
 Le programme :
 
@@ -102,7 +112,9 @@ Le programme :
 
 ## 5. Structure du projet
 
-text Projet_B_Groupe_6/ 
+```text
+Projet_B_Groupe_6/
+│
 ├── main.py
 ├── integration_numerique.py
 ├── methode_rectangles.py
@@ -137,7 +149,7 @@ SciPy est utilisé pour comparer les implémentations développées avec des mé
 
 ### Mesure des performances
 
-Les temps d'exécution sont mesurés à l'aide du module timeit.
+Les temps d'exécution sont mesurés à l'aide du module `timeit`.
 
 ### Visualisation des résultats
 
