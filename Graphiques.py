@@ -98,6 +98,24 @@ Représenter graphiquement la fonction polynomiale f(x) en 3D
 def tracer_surface_polynome(a, b, p1, p2, p3, p4):
     fig = plt.figure(figsize=(10,8))
     ax = fig.add_subplot(111, projection='3d')
+    x = np.linspace(a, b, 100)
+    y = np.linspace(0, 1, 30)
+
+    X, Y = np.meshgrid(x, y)
+
+    Z = p1 + p2 * X + p3 * X**2 + p4 * X**3
+
+    surf = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8)
+
+    ax.set_title("Surface du polynôme f(x)")
+    ax.set_xlabel("x")
+    ax.set_ylabel("y fictif")
+    ax.set_zlabel("f(x)")
+
+    fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
+
+    plt.tight_layout()
+    plt.show()
 
 def tracer_tableau_bord(n_values, erreurs_rect, temps_python, temps_numpy, a, b, p1, p2, p3, p4):
     """
