@@ -41,7 +41,7 @@ from methodes_preprogrammees_trapezes import (
     calcul_trapeze_preprogramme
 )
 
-
+from methode_simpson_preprog import integration_simpson_scipy
 
 # 3. Importation depuis le Module Spécifique aux graphiques
 
@@ -174,6 +174,16 @@ temps_simpson_numpy = mesurer_performance(
 print(f"Temps de calcul (Python de base) : {temps_simpson_base:.3e} secondes")
 print(f"Temps de calcul (Version NumPy)   : {temps_simpson_numpy:.3e} secondes")
 
+temps_simpson_scipy_base = mesurer_performance(
+    integration_simpson_scipy,
+    borne_a,
+    borne_b,
+    coefficients_poly,
+    n_segments_base
+)
+
+print(f"Temps de calcul (Version SciPy)   : {temps_simpson_scipy_base:.3e} secondes")
+
 rapport_simpson = temps_simpson_base / temps_simpson_numpy
 
 print("-" * 60)
@@ -193,6 +203,9 @@ temps_numpy = []
 erreurs_simp = []
 temps_simpson_python = []
 temps_simpson_numpy = []
+
+erreurs_simpson_scipy = []
+temps_simpson_scipy = []
 
 erreurs_trapeze = []
 erreurs_trap_preprog = []
@@ -261,6 +274,25 @@ for n in n_values:
         )
     )
 
+    approx_simpson_scipy = integration_simpson_scipy(
+        borne_a,
+        borne_b,
+        coefficients_poly,
+        n
+    )
+
+    erreurs_simpson_scipy.append(abs(i_exact_numpy - approx_simpson_scipy))
+
+    temps_simpson_scipy.append(
+        mesurer_performance(
+            integration_simpson_scipy,
+            borne_a,
+            borne_b,
+            coefficients_poly,
+            n
+        )
+    )
+
     approx_trapeze = calcul_trapeze_numpy(
         borne_a,
         borne_b,
@@ -317,6 +349,7 @@ tracer_convergence(
     n_values,
     erreurs_rect,
     erreurs_simp,
+    erreurs_simpson_scipy,
     erreurs_trapeze,
     erreurs_trap_preprog
 )
@@ -327,6 +360,7 @@ tracer_temps_execution(
     temps_numpy,
     temps_simpson_python,
     temps_simpson_numpy,
+    temps_simpson_scipy,
     temps_trapeze_python,
     temps_trapeze_numpy,
     temps_trapeze_preprog
@@ -336,6 +370,7 @@ tracer_erreurs(
     n_values,
     erreurs_rect,
     erreurs_simp,
+    erreurs_simpson_scipy,
     erreurs_trapeze,
     erreurs_trap_preprog
 )
