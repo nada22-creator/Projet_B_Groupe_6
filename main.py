@@ -137,6 +137,39 @@ print("-" * 60)
 rapport_vitesse_rect = temps_rect_base / temps_rect_numpy
 print(f"Résultat de l'analyse : NumPy est {rapport_vitesse_rect:.1f}x plus rapide sur les rectangles !")
 print("=" * 60)
+
+# ----------------------------------------------------------------------------
+# ÉTAPE 4 : Intégration Numérique - Méthode simpson
+# ----------------------------------------------------------------------------
+print("=" * 60)
+print("          MÉTHODE DE SIMPSON")
+print("=" * 60)
+
+temps_simpson_base = mesurer_performance(
+    integration_simpson_base,
+    borne_a,
+    borne_b,
+    p1, p2, p3, p4,
+    n_segments_base
+)
+
+temps_simpson_numpy = mesurer_performance(
+    integration_simpson_numpy,
+    borne_a,
+    borne_b,
+    coefficients_poly,
+    n_segments_base
+)
+
+print(f"Temps de calcul (Python de base) : {temps_simpson_base:.3e} secondes")
+print(f"Temps de calcul (Version NumPy)   : {temps_simpson_numpy:.3e} secondes")
+
+rapport_simpson = temps_simpson_base / temps_simpson_numpy
+
+print("-" * 60)
+print(f"Résultat de l'analyse : NumPy est {rapport_simpson:.1f}x plus rapide sur Simpson !")
+print("=" * 60)
+
 # ============================================================================
 # ÉTAPE 5 : AFFICHAGE DES GRAPHIQUES
 # ============================================================================
