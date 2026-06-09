@@ -15,15 +15,17 @@ import matplotlib.pyplot as plt
 # ============================================================================
 # 1. CONVERGENCE
 # ============================================================================
-def tracer_convergence(n_values, erreurs_rect, erreurs_simp):
+def tracer_convergence(n_values, erreurs_rect, erreurs_simp, erreurs_trap, erreurs_trap_preprog):
     plt.figure(figsize=(10,6))
 
     plt.plot(n_values, erreurs_rect, marker='o', label="Rectangles")
     plt.plot(n_values, erreurs_simp, marker='s', label="Simpson")
+    plt.plot(n_values, erreurs_trap, marker='^',label="Trapèzes Python")
+    plt.plot(n_values, erreurs_trap_preprog,marker='d',label="Trapèzes Préprogrammée")
 
     plt.xlabel("Nombre de segments (n)")
     plt.ylabel("Erreur absolue")
-    plt.title("Convergence - Rectangles vs Simpson")
+    plt.title("Convergence - Rectangles vs Simpson VS Trapeze")
 
     plt.grid(True)
     plt.legend()
@@ -34,17 +36,25 @@ def tracer_convergence(n_values, erreurs_rect, erreurs_simp):
 # ============================================================================
 # 2. TEMPS D'EXÉCUTION
 # ============================================================================
-def tracer_temps_execution(n_values, temps_python, temps_numpy, temps_simpson_python, temps_simpson_numpy):
+def tracer_temps_execution(n_values, temps_python, temps_numpy, temps_simpson_python, temps_simpson_numpy,    temps_trap_python,
+    temps_trap_numpy,
+    temps_trap_preprog):
+
     plt.figure(figsize=(10,6))
 
     plt.plot(n_values, temps_python, marker='o', label="Rectangles Python")
     plt.plot(n_values, temps_numpy, marker='s', label="Rectangles NumPy")
     plt.plot(n_values, temps_simpson_python, marker='^', label="Simpson Python")
     plt.plot(n_values, temps_simpson_numpy, marker='x', label="Simpson NumPy")
+    plt.plot(n_values, temps_trap_python, marker='d',label="Trapèzes Python")
+
+    plt.plot(n_values, temps_trap_numpy,marker='v',label="Trapèzes NumPy")
+
+    plt.plot(n_values, temps_trap_preprog, marker='P', label="Trapèzes Préprogrammée")
 
     plt.xlabel("Nombre de segments (n)")
     plt.ylabel("Temps (s)")
-    plt.title("Temps d'exécution - Rectangles vs Simpson")
+    plt.title("Temps d'exécution - Rectangles vs Simpson VS Trapeze")
 
     plt.grid(True)
     plt.legend()
@@ -55,15 +65,20 @@ def tracer_temps_execution(n_values, temps_python, temps_numpy, temps_simpson_py
 # ============================================================================
 # 3. ERREUR
 # ============================================================================
-def tracer_erreurs(n_values, erreurs_rect, erreurs_simp):
+def tracer_erreurs(n_values, erreurs_rect, erreurs_simp, erreurs_trapeze,
+        erreurs_trap_preprog):
     plt.figure(figsize=(10,6))
+
 
     plt.plot(n_values, erreurs_rect, marker='o', label="Rectangles")
     plt.plot(n_values, erreurs_simp, marker='s', label="Simpson")
+    plt.plot(n_values, erreurs_trapeze, marker='^', label="Trapèzes")
+    plt.plot(n_values, erreurs_trap_preprog, marker='x', label="Trapèzes préprogrammée")
+
 
     plt.xlabel("Nombre de segments (n)")
     plt.ylabel("Erreur")
-    plt.title("Erreur - Rectangles vs Simpson")
+    plt.title("Erreur - Rectangles vs Simpson VS Trapeze")
 
     plt.grid(True)
     plt.legend()

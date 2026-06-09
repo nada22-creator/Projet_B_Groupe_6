@@ -32,6 +32,16 @@ from methode_simpson import (
     integration_simpson_base,
     integration_simpson_numpy
 )
+from methodes_trapezes import (
+    calcul_trapeze,
+    calcul_trapeze_numpy
+)
+
+from methodes_preprogrammees_trapezes import (
+    calcul_trapeze_preprogramme
+)
+
+
 
 # 3. Importation depuis le Module Spécifique aux graphiques
 
@@ -184,6 +194,13 @@ erreurs_simp = []
 temps_simpson_python = []
 temps_simpson_numpy = []
 
+erreurs_trapeze = []
+erreurs_trap_preprog = []
+
+temps_trapeze_python = []
+temps_trapeze_numpy = []
+temps_trapeze_preprog = []
+
 for n in n_values:
 
     approx = integration_rectangles_numpy(
@@ -244,24 +261,83 @@ for n in n_values:
         )
     )
 
+    approx_trapeze = calcul_trapeze_numpy(
+        borne_a,
+        borne_b,
+        n,
+        coefficients_poly
+    )
+
+    approx_trapeze_preprog = calcul_trapeze_preprogramme(
+        borne_a,
+        borne_b,
+        n,
+        coefficients_poly
+    )
+
+    erreurs_trapeze.append(abs(i_exact_numpy - approx_trapeze))
+    erreurs_trap_preprog.append(abs(i_exact_numpy - approx_trapeze_preprog))
+
+    temps_trapeze_python.append(
+        mesurer_performance(
+            calcul_trapeze,
+            borne_a,
+            borne_b,
+            n,
+            p1, p2, p3, p4
+        )
+    )
+
+    temps_trapeze_numpy.append(
+        mesurer_performance(
+            calcul_trapeze_numpy,
+            borne_a,
+            borne_b,
+            n,
+            coefficients_poly
+        )
+    )
+
+    temps_trapeze_preprog.append(
+        mesurer_performance(
+            calcul_trapeze_preprogramme,
+            borne_a,
+            borne_b,
+            n,
+            coefficients_poly
+        )
+    )
+
+
 # ------------------------------------------------------------------
 # AFFICHAGE DES GRAPHIQUES
 # ------------------------------------------------------------------
 
-tracer_convergence(n_values, erreurs_rect, erreurs_simp)
+tracer_convergence(
+    n_values,
+    erreurs_rect,
+    erreurs_simp,
+    erreurs_trapeze,
+    erreurs_trap_preprog
+)
 
 tracer_temps_execution(
     n_values,
     temps_python,
     temps_numpy,
     temps_simpson_python,
-    temps_simpson_numpy
+    temps_simpson_numpy,
+    temps_trapeze_python,
+    temps_trapeze_numpy,
+    temps_trapeze_preprog
 )
 
 tracer_erreurs(
     n_values,
     erreurs_rect,
-    erreurs_simp
+    erreurs_simp,
+    erreurs_trapeze,
+    erreurs_trap_preprog
 )
 
 tracer_surface_polynome(
@@ -272,3 +348,43 @@ tracer_surface_polynome(
     p3,
     p4
 )
+# ----------------------------------------------------------------------------
+# ÉTAPE 5 : Intégration Numérique - Méthode des trapèzes
+# ----------------------------------------------------------------------------
+print("=" * 60)
+print("MÉTHODE DES TRAPÈZES")
+print("=" * 60)
+
+temps_trapeze_base = mesurer_performance(
+    calcul_trapeze,
+    borne_a,
+    borne_b,
+    n_segments_base,
+    p1, p2, p3, p4
+)
+
+temps_trapeze_numpy = mesurer_performance(
+    calcul_trapeze_numpy,
+    borne_a,
+    borne_b,
+    n_segments_base,
+    coefficients_poly
+)
+
+temps_trapeze_preprogramme = mesurer_performance(
+    calcul_trapeze_preprogramme,
+    borne_a,
+    borne_b,
+    n_segments_base,
+    coefficients_poly
+)
+
+print(f"Temps de calcul (Python de base)       : {temps_trapeze_base:.3e} secondes")
+print(f"Temps de calcul (Version NumPy)        : {temps_trapeze_numpy:.3e} secondes")
+print(f"Temps de calcul (Version préprogrammée): {temps_trapeze_preprogramme:.3e} secondes")
+
+rapport_trapeze = temps_trapeze_base / temps_trapeze_numpy
+
+print("-" * 60)
+print(f"Résultat de l'analyse : NumPy est {rapport_trapeze:.1f}x plus rapide sur les trapèzes !")
+print("=" * 60)
